@@ -41,10 +41,6 @@ const int pwmL = 3;  //PWMB -> D3
 // lets also create our encoder objects
 
 //--------------------set up FSM--------------------
-enum STATE {follow_right, turn_right, follow_left, turn_left, stop};
-STATE last_state;
-STATE current_state = follow_right;   // give it a value so we can enter the switch:case on first loop
-STATE next_state = current_state;     // give this a value so our switch:case behaves
 
 void setup() {
   // put your setup code here, to run once:
@@ -80,92 +76,23 @@ void loop() {
   //Serial.println(get_odom());
 
   // Put your FSM in here:
+  /* // FSM currently commented out so it doesn't interfere with sensor testing code
   switch (current_state) {
-
     case follow_right :
-      // check for events
-      if (get_odom() > 5) {        // our odometer hits 5m
-        next_state = stop;
-        break;
-      }
-      if (get_distance() < 0.1) {   // we come w/in 10cm (0.1m) of a box 
-        next_state = turn_right;
-        break;
-      }
-      // perform set of actions
-      if (get_line()) {             // if robot sees the line
-        motor_controller(0.1, -1);  // slowly forward, turning right
-      }
-      if (!get_line()) {            // if robot DOES NOT see the line
-        motor_controller(0.1, 1);   // slowly forward, turning left
-      }
       break;
-
     case turn_right :
-      // perform set of actions
-      motor_controller(0, -3);
-      if (last_state != turn_right) { // debouncer to make sure we actually turn around
-        delay(500); // will need to play with this value for effective debouncing
-      }
-      // check for events
-      if (get_line()) {
-        next_state = follow_left;
-        break;
-      }
       break;
-
     case follow_left :
-      // check for events
-      if (get_odom() > 10) {
-        next_state = stop;
-        break;
-      }
-      if (get_distance() < 0.1) {
-        next_state = turn_left;
-        break;
-      }
-      // perform set of actions
-      if (get_line()) {             // if robot sees the line
-        motor_controller(0.1, 1);   // slowly forward, turning left
-      }
-      if (!get_line()) {            // if robot DOES NOT see the line
-        motor_controller(0.1, -1);  // slowly forward, turning right
-      }
       break;
-
     case turn_left :
-      // perform set of actions
-      motor_controller(0, 3);
-      if (last_state != turn_left) { // debouncer to make sure we actually turn around
-        delay(500); 
-      }
-      // check for events
-      if (get_line()) {
-        next_state = follow_right;
-        break;
-      }
       break;
-
     case stop :
-      // perform set of actions
-      motor_controller(0, 0);
-      right_encoder.setEncoderCount(0);
-      left_encoder.setEncoderCount(0);
-      delay(3000);
-      // set next_state
-      if (last_state == follow_right) {
-        next_state = turn_right;
-      }
-      if (last_state == follow_left) {
-        next_state = turn_left;
-      }
       break;
-    
-    // could include a default that throws an error and exits?
   }
 
-  last_state = current_state;
-  current_state = next_state;
+  // update states
+
+  */
 }
 
 
@@ -206,7 +133,7 @@ float get_odom() {
   // find the angular position of our wheels
 
   // calculate the linear position of our robot from the angular position of the wheels
-  
+
 }
 
 void motor_controller(float v, float w) {
