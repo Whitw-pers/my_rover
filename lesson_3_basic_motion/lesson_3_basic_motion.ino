@@ -50,6 +50,7 @@ void loop() {
   // is a normal comment
   /* is a block comment */
 
+  // remove the block comment below to see the rover move in all directions
   /*
   v = -0.346;
   w = 0;
@@ -74,15 +75,15 @@ void loop() {
 // void drive(vel_L, vel_R)
 
 void motor_controller(float v, float w) {
-// determines required wheel speeds (in rad/s) based on linear and angular velocities (m/s, rad/s)
-// maps required wheel speeds to PWM duty cycle
-// expects -0.346 < v < 0.346 m/s, -4.73 < w < 4.73 rad/s
-// motors will saturate if desired velocity vector is too large, best to keep desired velocities low
+  // determines required wheel speeds (in rad/s) based on linear and angular velocities (m/s, rad/s)
+  // maps required wheel speeds to PWM duty cycle
+  // expects -0.346 < v < 0.346 m/s, -4.73 < w < 4.73 rad/s
+  // motors will saturate if desired velocity vector is too large, best to keep desired velocities low
 
 }
 
 void drive(int duty_L, int duty_R) {
-// based on PWM duty cycle setting, assigns motor driver pin values
-// expects duty_L and duty_R to be between -255 and 255
-  
+  // based on PWM duty cycle setting, assigns motor driver pin values
+  // expects duty_L and duty_R to be between -255 and 255
+
 }
