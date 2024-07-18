@@ -10,7 +10,6 @@ left and right directions referenced in comments are from the robot's perspectiv
 */ 
 
 // include the QuadratureEncoder library
-#include <QuadratureEncoder.h>
 
 //--------------------rover geometry parameters--------------------
 // motor_controller() uses these parameters to calculate wheel velocities
@@ -32,24 +31,14 @@ const int pwmL = 3;  //PWMB -> D3
 //--------------------declare sensor pins--------------------
 // declare echo and trig pins for ultrasonic sensor
 
-const int echo = 11; // Echo  -> D11
-const int trig = 12; // Trig  -> D12
-
 // declare pin for infrared sensor
-
-const int ir = 13;  // OUT  -> D13
 
 // declare a and b pins for encoders (can be analog pins)
 // right encoder
-const int a_r = A3; // A  -> A3
-const int b_r = A2; // B  -> A2
+
 // left encoder
-const int a_l = A1; // A  -> A1
-const int b_l = A0; // B  -> A0
 
 // lets also create our encoder objects
-Encoders right_encoder(a_r, b_r);
-Encoders left_encoder(a_l, b_l);
 
 //--------------------set up FSM--------------------
 enum STATE {follow_right, turn_right, follow_left, turn_left, stop};
@@ -71,9 +60,6 @@ void setup() {
   pinMode(pwmL, OUTPUT);
 
   //--------------------setup sensor pins--------------------
-  pinMode(echo, INPUT);
-  pinMode(trig, OUTPUT);
-  pinMode(ir, INPUT);
   // no need to setup our encoder pins, the library takes care of that
 
 }
@@ -82,16 +68,13 @@ void loop() {
   // put your main code here, to run repeatedly:
 
   // uncomment to test get_distance()
-  // have verified TOF sensor works, though not super accurate
   //Serial.println(get_distance());
   //delay(1000);
 
   // uncomment to test get_line()
-  // have verified line detection works
   //Serial.println(get_line());
 
   // uncomment to test get_odom()
-  // have verified odometry works
   //motor_controller(0.346, 0);
   //delay(2000);
   //Serial.println(get_odom());
@@ -202,36 +185,28 @@ float get_distance() {
   float calculated_distance;   // var to store distance calculated from time of flight
 
   // send out an ultrasonic pulse thats 10ms long
-  digitalWrite(trig, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trig, LOW);
 
   // use pulseIn function to see how long it takes for the pulse to return to the sensor
-  echo_time = pulseIn(echo, HIGH);
 
   // calculate distance using formula from ToF sensor section
-  return calculated_distance = (echo_time / 2) / (346 * 10); 
-  //*10 is to scale units appropriately since pulseIn returns in microseconds
+
 }
 
 bool get_line() {
   // returns 0 (false) if no reflection seen (over black surface)
   // returns 1 (true) if reflection seen (over white surface)
-  // this only worked when the lipo was plugged in as well as the serial cable
+  // this only works when the lipo was plugged in as well as the serial cable
   // the IR sensor NEEDS to be fed ~5V
-  return !digitalRead(ir);
+  
 }
 
 float get_odom() {
   // get encoder counts using getEncoderCount method from the Encoders class
-  long left_encoder_count = left_encoder.getEncoderCount();
-  long right_encoder_count = right_encoder.getEncoderCount();
 
-  float left_wheel_pos = left_encoder_count * ((2 * 3.14) / 3575.04);
-  float right_wheel_pos = right_encoder_count * ((2 * 3.14) / 3575.04);
+  // find the angular position of our wheels
 
-  float odom = (r / 2) * (left_wheel_pos + right_wheel_pos);
-  return odom;
+  // calculate the linear position of our robot from the angular position of the wheels
+  
 }
 
 void motor_controller(float v, float w) {
