@@ -1,2 +1,0 @@
-# QuadratureEncoder
-Arduino Quadrature Encoder
