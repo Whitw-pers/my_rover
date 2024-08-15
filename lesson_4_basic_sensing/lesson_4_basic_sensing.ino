@@ -73,7 +73,9 @@ void loop() {
   // uncomment to test get_odom()
   //motor_controller(0.346, 0);
   //delay(2000);
-  //Serial.println(get_odom());
+  //Serial.println(get_odom()); // returns in meters
+  // if get_odom() returns negative numbers, try reversing the yellow/white signal wires of both encoders
+  // if get_odom() grows much slower than you expect (0.346 m/s), try reversing the yellow/white signal wires of one encoder at a time
 
   // Put your FSM in here:
   /* // FSM currently commented out so it doesn't interfere with sensor testing code
